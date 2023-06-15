@@ -1,11 +1,11 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ProviderContext from "../ProviderContext";
 import { useTranslation } from "react-i18next";
 
 const Instance = (props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const instances = props.instances;
   const { stateProvider, setStateProvider } = React.useContext(ProviderContext);
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ const Instance = (props) => {
   const submit = (instance) => {
     setStateProvider({ ...stateProvider, instance: instance });
     sessionStorage.setItem("instance", instance.id);
-    history.push(`/provider/summary`);
+    navigate(`/provider/summary`);
   };
 
   return instances.map((instance) => (

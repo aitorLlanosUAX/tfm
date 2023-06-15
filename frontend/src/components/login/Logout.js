@@ -1,11 +1,11 @@
 import React from "react";
 import { Alert } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const Logout = () => {
-  const history = useHistory();
-  history.push("/");
+  const navigate = useNavigate();
+  navigate("/");
   const { t } = useTranslation();
   sessionStorage.removeItem("user");
   sessionStorage.removeItem("role");

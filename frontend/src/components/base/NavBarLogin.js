@@ -1,12 +1,12 @@
 import React from "react";
 import Session from "../login/Session";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button, Nav } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
 const NavBar = () => {
   const { state, setState } = React.useContext(Session);
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   let user =
     window.sessionStorage.getItem("user") == null
@@ -20,7 +20,7 @@ const NavBar = () => {
           <Button
             variant="outline-dark"
             id="signup"
-            onClick={() => history.push("/signup")}
+            onClick={() => navigate("/signup")}
           >
             {t("SignUp")}
           </Button>
@@ -30,7 +30,7 @@ const NavBar = () => {
             variant="outline-dark"
             className="mx-3"
             id="login"
-            onClick={() => history.push("/login")}
+            onClick={() => navigate("/login")}
           >
             {t("Login")}
           </Button>
@@ -48,7 +48,7 @@ const NavBar = () => {
           onClick={(e) => {
             e.preventDefault();
             setState({ user: null });
-            history.push("/logout");
+            navigate("/logout");
           }}
         >
           {t("Logout")}

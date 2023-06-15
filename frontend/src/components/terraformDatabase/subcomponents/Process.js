@@ -5,23 +5,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit, faList } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import Session from "../../login/Session";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Process = (props) => {
   const processes = props.processes;
   const { t } = useTranslation();
   const { state } = React.useContext(Session);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   let role =
     window.sessionStorage.getItem("role") == null
       ? state.user?.role
       : sessionStorage.getItem("role");
   const checkProcess = (id) => {
-    history.push("/process/" + id);
+    navigate("/process/" + id);
   };
   const updateProcess = (id) => {
-    history.push("/process/update/" + id);
+    navigate("/process/update/" + id);
   };
 
   const deleteProcess = (processId) => {
@@ -37,8 +37,8 @@ const Process = (props) => {
     })
       .then((res) => res.json())
       .then((result) => {
-        history.push("/login");
-        history.push("/dashboard");
+        navigate("/login");
+        navigate("/dashboard");
       })
       .catch(console.log("Network Error"));
   };

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Nav, Navbar, Dropdown } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NavBarLogin from "../base/NavBarLogin";
 import NavLanguajes from "./NavLanguajes";
 import { useTranslation } from "react-i18next";
@@ -8,7 +8,7 @@ import Session from "../login/Session";
 
 const TopNavBar = () => {
   const { state } = React.useContext(Session);
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   let role =
     window.sessionStorage.getItem("role") == null
@@ -24,7 +24,7 @@ const TopNavBar = () => {
             variant="outline-dark"
             className="mx-3"
             id="home"
-            onClick={() => history.push("/")}
+            onClick={() => navigate("/")}
           >
             {t("Home")}
           </Button>
@@ -35,7 +35,7 @@ const TopNavBar = () => {
               variant="outline-dark"
               className="mx-3"
               id="procesos"
-              onClick={() => history.push("/dashboard")}
+              onClick={() => navigate("/dashboard")}
             >
               {t("Processes")}
             </Button>
@@ -51,25 +51,25 @@ const TopNavBar = () => {
               <Dropdown.Menu>
                 <Dropdown.Item
                   id="providers"
-                  onClick={() => history.push("/provider/list")}
+                  onClick={() => navigate("/provider/list")}
                 >
                   {t("Providers")}
                 </Dropdown.Item>
                 <Dropdown.Item
                   id="regions"
-                  onClick={() => history.push("/region/list")}
+                  onClick={() => navigate("/region/list")}
                 >
                   {t("Regions")}
                 </Dropdown.Item>
                 <Dropdown.Item
                   id="images"
-                  onClick={() => history.push("/image/list")}
+                  onClick={() => navigate("/image/list")}
                 >
                   {t("Images")}
                 </Dropdown.Item>
                 <Dropdown.Item
                   id="instances"
-                  onClick={() => history.push("/instance/list")}
+                  onClick={() => navigate("/instance/list")}
                 >
                   {t("Instances")}
                 </Dropdown.Item>

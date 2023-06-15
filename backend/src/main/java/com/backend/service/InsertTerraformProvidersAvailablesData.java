@@ -45,7 +45,7 @@ public class InsertTerraformProvidersAvailablesData {
 			aws_secretKey.setProvider_id(providerRepository.findByName("Aws").getId());
 			
 			ProviderCLI googleCloud = new ProviderCLI();
-			googleCloud.setId(1);
+			googleCloud.setId(2);
 			googleCloud.setName("Google Cloud");
 			providerRepository.save(googleCloud);
 			Creedential creedentials_route = new Creedential();

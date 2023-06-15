@@ -1,11 +1,11 @@
-package com.batchCloud.back.test.selenium.pageobject;
+package com.backend.test.selenium.pageobject;
 
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.batchCloud.back.test.util.SeleniumUtils;
+import com.backend.test.util.SeleniumUtils;
 
 public class PO_View {
 	

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const RegionTableContent = (props) => {
   const regions = props.regions;
   const [isLoaded, setIsLoaded] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const deleteRegion = (regionId) => {
     let urlSearch = new URL("http://localhost:8080/region/delete");
@@ -22,8 +22,8 @@ const RegionTableContent = (props) => {
     })
       .then((res) => res.json())
       .then((result) => {
-        history.push("/dashboard");
-        history.push("/region/list");
+        navigate("/dashboard");
+        navigate("/region/list");
       })
       .catch(console.log("Network Error"));
   };
@@ -71,7 +71,7 @@ const RegionTableContent = (props) => {
             variant="primary"
             type="submit"
             id={"updateRegion " + region.name}
-            onClick={() => history.push("/region/update/" + region.id)}
+            onClick={() => navigate("/region/update/" + region.id)}
           >
             <FontAwesomeIcon icon={faEdit} />
           </Button>

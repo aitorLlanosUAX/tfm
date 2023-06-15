@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Container, Form, Row, Alert } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Session from "./Session";
 import { useTranslation } from "react-i18next";
 
@@ -27,7 +27,7 @@ const SignUp = (props) => {
   const [password, setPassword] = useState("");
   const [passwordRepeated, setPasswordRepeated] = useState("");
   const { setState } = React.useContext(Session);
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   let params = {
@@ -48,7 +48,7 @@ const SignUp = (props) => {
     }
     setState({ user: userToLog });
 
-    history.push("/login");
+    navigate("/login");
   };
 
   return (

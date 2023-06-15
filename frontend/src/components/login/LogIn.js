@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Container, Form, Row, Alert } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Session from "./Session";
 import { useTranslation } from "react-i18next";
 
@@ -8,7 +8,7 @@ const LogIn = () => {
   const { setState } = React.useContext(Session);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const LogFunc = async () => {
@@ -42,7 +42,7 @@ const LogIn = () => {
     setState({ user: userToLog });
     sessionStorage.setItem("user", userToLog.username);
     sessionStorage.setItem("role", userToLog.role);
-    history.push("/dashboard");
+    navigate("/dashboard");
   };
 
   return (

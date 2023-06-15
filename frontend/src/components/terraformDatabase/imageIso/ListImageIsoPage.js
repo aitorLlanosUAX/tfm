@@ -5,13 +5,13 @@ import Loader from "../../util/Loader";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ListInstancePage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [images, setImages] = useState([]);
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   useEffect(() => {
     fetch("http://localhost:8080/image/list", {
       method: "GET",
@@ -36,7 +36,7 @@ const ListInstancePage = () => {
             variant="primary"
             type="submit"
             id="insertImage"
-            onClick={() => history.push("/image/insert")}
+            onClick={() => navigate("/image/insert")}
           >
             <FontAwesomeIcon className="px-1" icon={faPlus} />
             {t("AddImage")}

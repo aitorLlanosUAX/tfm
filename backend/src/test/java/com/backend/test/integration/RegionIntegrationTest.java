@@ -1,4 +1,4 @@
-package com.batchCloud.back.test.integration;
+package com.backend.test.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -24,63 +24,60 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.backend.controllers.ImageIsoController;
-import com.backend.entities.terraform.terraformDatabase.ImageIso;
-import com.backend.service.ImageIsoService;
+import com.backend.controllers.RegionController;
+import com.backend.entities.terraform.terraformDatabase.Region;
+import com.backend.service.RegionService;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(value = ImageIsoController.class)
-public class ImageIsoIntegrationTest {
+@WebMvcTest(value = RegionController.class)
+public class RegionIntegrationTest {
 
 	@Autowired
 	private MockMvc mockMvc;
+
 	@MockBean
-	private ImageIsoService imageService;
-	
-	
-	private ImageIso wellImage = new ImageIso();
-	
-	
-	String jsonString = "{\"id\":null,\"name\":\"image_name\",\"operatingSystem\":\"Ubuntu\",\"region_id\":1,\"provider_id\":1}";
-	String jsonStringList = "[{\"id\":null,\"name\":\"image_name\",\"operatingSystem\":\"Ubuntu\",\"region_id\":1,\"provider_id\":1}]";
+	private RegionService regionService;
 
+	private Region wellRegion = new Region();
 
-	
+	String jsonRegion = "{\"id\":null,\"name\":\"eu-west-3\",\"zone\":\"Paris\",\"provider_id\":1}";
+	String jsonRegionList = "[{\"id\":null,\"name\":\"eu-west-3\",\"zone\":\"Paris\",\"provider_id\":1}]";
+
 	@BeforeEach
-	public void setup() {
-		wellImage.setName("image_name");
-		wellImage.setOperatingSystem("Ubuntu");
-		wellImage.setProvider_id(1);
-		wellImage.setRegion_id(1);
+	public void setUp() {
+		wellRegion.setName("eu-west-3");
+		wellRegion.setZone("Paris");
+		wellRegion.setProvider_id(1);
 	}
-	
+
 	@Test
-	public void normalAddImage() throws Exception {
-		String url = "/image/insert";
-		String jsonString = "{\"operatingSystem\":\"Ubuntu\",\"name\":\"a\",\"provider_id\":1,\"image_id\":1}";
+	public void normaAddRegion() throws Exception {
+		String url = "/region/insert";
+		String jsonString = "{\"zone\":\"Paris\",\"name\":\"eu-west-3\",\"provider_id\":\"1\"}";
 
 		MvcResult result = mockMvc.perform(post(url).contentType(MediaType.APPLICATION_JSON).content(jsonString))
 				.andExpect(status().isOk()).andReturn();
 
 		assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
+
 	}
 	
 	@Test
-	public void addImageWithoutParams() throws Exception {
-		String url = "/image/insert";
+	public void addRegionWithoutParams() throws Exception {
+		String url = "/region/insert";
 		String jsonString = "{}";
 
-		MvcResult result = mockMvc.perform(post(url).contentType(MediaType.APPLICATION_JSON).content(jsonString))
-				.andExpect(status().isOk()).andReturn();
+		MvcResult result = mockMvc.perform(post(url).contentType(MediaType.APPLICATION_JSON).content(jsonString)).andReturn();
 
 		assertEquals(String.valueOf(Response.SC_BAD_REQUEST), result.getResponse().getContentAsString());
+
 	}
 	
 	@Test
 	public void normalDelete() throws Exception {
-		String url = "/image/delete?id=1";
+		String url = "/region/delete?id=1";
 
-		Mockito.when(imageService.findById(1)).thenReturn(wellImage);
+		Mockito.when(regionService.findById(1)).thenReturn(wellRegion);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(url).accept(MediaType.APPLICATION_JSON);
 
@@ -93,9 +90,10 @@ public class ImageIsoIntegrationTest {
 	}
 	
 	@Test
-	public void deleteImageWithoutParams() throws Exception {
-		String url = "/image/delete";
+	public void deleteRegionWithoutParams() throws Exception {
+		String url = "/region/delete";
 
+		Mockito.when(regionService.findById(1)).thenReturn(wellRegion);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(url).accept(MediaType.APPLICATION_JSON);
 
@@ -108,10 +106,10 @@ public class ImageIsoIntegrationTest {
 	}
 	
 	@Test
-	public void deleteImageWithoutExistentimage() throws Exception {
-		String url = "/image/delete?id=2";
+	public void deleteRegionWithoutExistentRegion() throws Exception {
+		String url = "/region/delete?id=2";
 
-		Mockito.when(imageService.findById(1)).thenReturn(wellImage);
+		Mockito.when(regionService.findById(1)).thenReturn(wellRegion);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(url).accept(MediaType.APPLICATION_JSON);
 
@@ -121,15 +119,14 @@ public class ImageIsoIntegrationTest {
 		assertEquals(String.valueOf(Response.SC_NOT_FOUND), result.getResponse().getContentAsString());
 	}
 	
-
 	
 	@Test
 	public void normalList() throws Exception {
-		String url = "/image/list";
-		List<ImageIso> images = new ArrayList<ImageIso>();
-		images.add(wellImage);
+		String url = "/region/list";
+		List<Region> regions = new ArrayList<Region>();
+		regions.add(wellRegion);
 
-		Mockito.when(imageService.findAll()).thenReturn(images);
+		Mockito.when(regionService.findAll()).thenReturn(regions);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(url).accept(MediaType.APPLICATION_JSON);
 
@@ -138,16 +135,16 @@ public class ImageIsoIntegrationTest {
 		MockHttpServletResponse response = result.getResponse();
 				
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
-		assertEquals(jsonStringList, response.getContentAsString());
+		assertEquals(jsonRegionList, response.getContentAsString());
 
 	}
 
 	
 	@Test
 	public void normalListEmpty() throws Exception {
-		String url = "/image/list";
+		String url = "/region/list";
 	
-		Mockito.when(imageService.findAll()).thenReturn(new ArrayList<ImageIso>());
+		Mockito.when(regionService.findAll()).thenReturn(new ArrayList<Region>());
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(url).accept(MediaType.APPLICATION_JSON);
 
@@ -162,9 +159,9 @@ public class ImageIsoIntegrationTest {
 	
 	@Test
 	public void normalFindById() throws Exception {
-		String url = "/image/findById?id=1";
+		String url = "/region/findById?id=1";
 	
-		Mockito.when(imageService.findById(1)).thenReturn(wellImage);
+		Mockito.when(regionService.findById(1)).thenReturn(wellRegion);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(url).accept(MediaType.APPLICATION_JSON);
 
@@ -172,15 +169,15 @@ public class ImageIsoIntegrationTest {
 		MockHttpServletResponse response = result.getResponse();
 
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
-		assertEquals(jsonString, response.getContentAsString());
+		assertEquals(jsonRegion, response.getContentAsString());
 
 	}
 	
 	@Test
 	public void findByIdWithNoId() throws Exception {
-		String url = "/image/findById?id=2";
+		String url = "/region/findById?id=2";
 	
-		Mockito.when(imageService.findById(1)).thenReturn(wellImage);
+		Mockito.when(regionService.findById(1)).thenReturn(wellRegion);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(url).accept(MediaType.APPLICATION_JSON);
 
@@ -194,12 +191,12 @@ public class ImageIsoIntegrationTest {
 	
 	
 	@Test
-	public void normalFindByProviderAndRegionId() throws Exception {
-		String url = "/image/findByRegionAndProvider?region_id=1&provider_id=1";
-		List<ImageIso> images = new ArrayList<ImageIso>();
-		images.add(wellImage);
+	public void normalFindByProviderId() throws Exception {
+		String url = "/region/fromProvider?provider_id=1";
+		List<Region> regions = new ArrayList<Region>();
+		regions.add(wellRegion);
 
-		Mockito.when(imageService.findByRegionIdAndProviderId(1,1)).thenReturn(images);
+		Mockito.when(regionService.findByProviderId(1)).thenReturn(regions);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(url).accept(MediaType.APPLICATION_JSON);
 
@@ -207,35 +204,17 @@ public class ImageIsoIntegrationTest {
 		MockHttpServletResponse response = result.getResponse();
 
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
-		assertEquals(jsonStringList, response.getContentAsString());
+		assertEquals(jsonRegionList, response.getContentAsString());
 
 	}
 	
 	@Test
 	public void findByProviderIdNoExistent() throws Exception {
-		String url = "/image/findByRegionAndProvider?region_id=1&provider_id=2";
-		List<ImageIso> images = new ArrayList<ImageIso>();
-		images.add(wellImage);
+		String url = "/region/fromProvider?provider_id=2";
+		List<Region> regions = new ArrayList<Region>();
+		regions.add(wellRegion);
 
-		Mockito.when(imageService.findByRegionIdAndProviderId(1,1)).thenReturn(images);
-
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(url).accept(MediaType.APPLICATION_JSON);
-
-		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-		MockHttpServletResponse response = result.getResponse();
-
-		assertEquals(HttpStatus.OK.value(), response.getStatus());
-		assertEquals("[]", response.getContentAsString());
-
-	}
-	
-	@Test
-	public void findByRegionIdNoExistent() throws Exception {
-		String url = "/image/findByRegionAndProvider?region_id=2&provider_id=1";
-		List<ImageIso> images = new ArrayList<ImageIso>();
-		images.add(wellImage);
-
-		Mockito.when(imageService.findByRegionIdAndProviderId(1,1)).thenReturn(images);
+		Mockito.when(regionService.findByProviderId(1)).thenReturn(regions);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(url).accept(MediaType.APPLICATION_JSON);
 
@@ -246,6 +225,4 @@ public class ImageIsoIntegrationTest {
 		assertEquals("[]", response.getContentAsString());
 
 	}
-	
-
 }

@@ -1,4 +1,4 @@
-package com.batchCloud.back.test.selenium.pageobject;
+package com.backend.test.selenium.pageobject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
@@ -42,52 +42,54 @@ const AdminRouter = () => {
     <Router>
       <TopNavBar />
       <Container>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/login" component={LogIn} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/newProcess" component={IntialProcessPage} />
-          <Route path="/provider/list" component={ListProviderPage} />
-          <Route path="/region/list" component={ListRegionPage} />
-          <Route path="/image/list" component={ListImageIsoPage} />
-          <Route path="/instance/list" component={ListInstancePage} />
-          <Route path="/providersAvailable" component={ProviderPage} />
-          <Route path="/provider/region/:id" component={RegionPage} />
-          <Route exact path="/process/:id" component={CheckProcessPage} />
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/newProcess" element={<IntialProcessPage />} />
+          <Route path="/provider/list" element={<ListProviderPage />} />
+          <Route path="/region/list" element={<ListRegionPage />} />
+          <Route path="/image/list" element={<ListImageIsoPage />} />
+          <Route path="/instance/list" element={<ListInstancePage />} />
+          <Route path="/providersAvailable" element={<ProviderPage />} />
+          <Route path="/provider/region/:id" element={<RegionPage />} />
+          <Route exact path="/process/:id" element={<CheckProcessPage />} />
           <Route
             path="/process/update/:processId"
-            component={UpdateProcessPage}
+            element={<UpdateProcessPage />}
           />
-          <Route path="/provider/insert" component={InsertProviderPage} />
+          <Route path="/provider/insert" element={<InsertProviderPage />} />
           <Route
             path="/provider/creedentials/:id"
-            component={AddCreedentials}
+            element={<AddCreedentials />}
           />
           <Route
             path="/provider/checkcreedentials/:name"
-            component={CheckCredentials}
+            element={<CheckCredentials />}
           />
-          <Route path="/provider/update/:name" component={UpdateCreedentials} />
-          <Route exact path="/region/insert" component={InsertRegionPage} />
-          <Route path="/region/update/:regionId" component={UpdateRegionPage} />
-          <Route path="/image/insert" component={InsertImagePage} />
-          <Route path="/image/update/:imageId" component={UpdateImagePage} />
-          <Route path="/instance/insert" component={InsertInstancePage} />
+          <Route
+            path="/provider/update/:name"
+            element={<UpdateCreedentials />}
+          />
+          <Route exact path="/region/insert" element={<InsertRegionPage />} />
+          <Route path="/region/update/:regionId" element={<UpdateRegionPage />} />
+          <Route path="/image/insert" element={<InsertImagePage />} />
+          <Route path="/image/update/:imageId" element={<UpdateImagePage />} />
+          <Route path="/instance/insert" element={<InsertInstancePage />} />
           <Route
             path="/instance/update/:instanceId"
-            component={UpdateInstancePage}
+            element={<UpdateInstancePage />}
           />
-
           <Route
             path="/provider/image/:idRegion/:idProvider"
-            component={ImagePage}
+            element={<ImagePage />}
           />
-          <Route path="/provider/instance/:imageId" component={InstancePage} />
-          <Route path="/provider/summary" component={SummaryPage} />
-          <Route path="*" component={ErrorPage} />
-        </Switch>
+          <Route path="/provider/instance/:imageId" element={<InstancePage />} />
+          <Route path="/provider/summary" element={<SummaryPage />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
       </Container>
     </Router>
   );

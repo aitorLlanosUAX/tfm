@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Form, Button } from "react-bootstrap";
 import Loader from "../../../util/Loader";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const CheckCreedentials = () => {
@@ -11,10 +11,10 @@ const CheckCreedentials = () => {
   const [creedentialsValue, setCreedentialsValue] = useState();
   const [credentials, setCreedentials] = useState();
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    history.push("/provider/list");
+    navigate("/provider/list");
   };
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-package com.batchCloud.back.test.selenium;
+package com.backend.test.selenium;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -10,15 +10,15 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import com.batchCloud.back.test.selenium.pageobject.PO_CreateNewImage;
-import com.batchCloud.back.test.selenium.pageobject.PO_CreateNewInstance;
-import com.batchCloud.back.test.selenium.pageobject.PO_CreateNewProcess;
-import com.batchCloud.back.test.selenium.pageobject.PO_CreateNewProvider;
-import com.batchCloud.back.test.selenium.pageobject.PO_CreateNewRegion;
-import com.batchCloud.back.test.selenium.pageobject.PO_HomeView;
-import com.batchCloud.back.test.selenium.pageobject.PO_LoginView;
-import com.batchCloud.back.test.selenium.pageobject.PO_RegisterView;
-import com.batchCloud.back.test.util.SeleniumUtils;
+import com.backend.test.selenium.pageobject.PO_CreateNewImage;
+import com.backend.test.selenium.pageobject.PO_CreateNewInstance;
+import com.backend.test.selenium.pageobject.PO_CreateNewProcess;
+import com.backend.test.selenium.pageobject.PO_CreateNewProvider;
+import com.backend.test.selenium.pageobject.PO_CreateNewRegion;
+import com.backend.test.selenium.pageobject.PO_HomeView;
+import com.backend.test.selenium.pageobject.PO_LoginView;
+import com.backend.test.selenium.pageobject.PO_RegisterView;
+import com.backend.test.util.SeleniumUtils;
 
 public class IntegrationSeleniumTest {
 	static String PathFirefox65 = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";

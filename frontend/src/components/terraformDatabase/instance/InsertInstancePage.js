@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
@@ -9,7 +9,7 @@ const InsertInstancePage = () => {
   const [memory, setMemory] = useState();
   const [cost, setCost] = useState();
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [providers, setProviders] = useState([]);
   const [regions, setRegions] = useState([]);
@@ -52,8 +52,8 @@ const InsertInstancePage = () => {
       document.getElementById("errorAdd").hidden = false;
       return;
     }
-    history.push("/dashboard");
-    history.push("/instance/list");
+    navigate("/dashboard");
+    navigate("/instance/list");
   };
 
   useEffect(() => {
@@ -106,7 +106,7 @@ const InsertInstancePage = () => {
         setIsLoadedImage(true);
         setImages(result);
       })
-      .catch(console.log("Network Error"));
+      .catch(e=> console.log(e));
   };
   return (
     <Container>
@@ -220,7 +220,7 @@ const InsertInstancePage = () => {
             <Button
               className="mx-2"
               variant="primary"
-              onClick={() => history.push("/instance/list")}
+              onClick={() => navigate("/instance/list")}
               name="back"
               id="back"
             >

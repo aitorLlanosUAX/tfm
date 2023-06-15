@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Form, Button } from "react-bootstrap";
 import ProviderContext from "./ProviderContext";
 import { useTranslation } from "react-i18next";
@@ -8,7 +8,7 @@ const IntialProcessPage = () => {
   const [processName, setProcessName] = useState();
   const [instanceNumber, setInstanceNumber] = useState(-1);
   const [description, setDescription] = useState();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { stateProvider, setStateProvider } = React.useContext(ProviderContext);
   const { t } = useTranslation();
 
@@ -23,7 +23,7 @@ const IntialProcessPage = () => {
     sessionStorage.setItem("instanceNumber", instanceNumber);
     sessionStorage.setItem("description", description);
 
-    history.push("/providersAvailable");
+    navigate("/providersAvailable");
   };
   return (
     <Container>

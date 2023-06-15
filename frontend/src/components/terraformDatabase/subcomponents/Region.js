@@ -1,11 +1,11 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ProviderContext from "../ProviderContext";
 import { useTranslation } from "react-i18next";
 
 const Region = (props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const regions = props.regions;
   const { stateProvider, setStateProvider } = React.useContext(ProviderContext);
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ const Region = (props) => {
   const submit = (region) => {
     setStateProvider({ ...stateProvider, region: region });
     sessionStorage.setItem("region", region.id);
-    history.push(`/provider/image/${region.id}/${stateProvider.provider.id}`);
+    navigate(`/provider/image/${region.id}/${stateProvider.provider.id}`);
   };
 
   return regions.map((region) => (

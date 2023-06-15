@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Form, Button, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -8,7 +8,7 @@ import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 
 const CheckProcessPage = () => {
   const { id } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [process, setProcess] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -27,7 +27,7 @@ const CheckProcessPage = () => {
   }, [id]);
 
   const handleSubmit = async (e) => {
-    history.push("/dashboard");
+    navigate("/dashboard");
   };
 
   return (

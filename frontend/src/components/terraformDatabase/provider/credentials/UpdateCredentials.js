@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Form, Button, Col } from "react-bootstrap";
 import Loader from "../../../util/Loader";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const UpdateCreedentials = () => {
@@ -12,7 +12,7 @@ const UpdateCreedentials = () => {
   const [credentials, setCreedentials] = useState();
   const { t } = useTranslation();
   const creedentialsHashMap = new Map();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,8 +30,8 @@ const UpdateCreedentials = () => {
     })
       .then((response) => response.json())
       .catch(console.log("Network Error"));
-    history.push("/dashboard");
-    history.push("/provider/list");
+    navigate("/dashboard");
+    navigate("/provider/list");
   };
   useEffect(() => {
     let urlSearch = new URL(
@@ -102,7 +102,7 @@ const UpdateCreedentials = () => {
             <Button
               className="mx-2"
               variant="primary"
-              onClick={() => history.push("/provider/list")}
+              onClick={() => navigate("/provider/list")}
               name="back"
               id="back"
             >

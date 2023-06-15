@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 
@@ -24,24 +24,23 @@ const LoggedUserRouter = () => {
     <Router>
       <TopNavBar />
       <Container>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/login" component={LogIn} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/newProcess" component={IntialProcessPage} />
-          <Route path="/providersAvailable" component={ProviderPage} />
-          <Route path="/provider/region/:id" component={RegionPage} />
-
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/newProcess" element={<IntialProcessPage />} />
+          <Route path="/providersAvailable" element={<ProviderPage />} />
+          <Route path="/provider/region/:id" element={<RegionPage />} />
           <Route
             path="/provider/image/:idRegion/:idProvider"
-            component={ImagePage}
+            element={<ImagePage />}
           />
-          <Route path="/provider/instance/:imageId" component={InstancePage} />
-          <Route path="/provider/summary" component={SummaryPage} />
-          <Route path="*" component={ErrorPage} />
-        </Switch>
+          <Route path="/provider/instance/:imageId" element={<InstancePage />} />
+          <Route path="/provider/summary" element={<SummaryPage />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
       </Container>
     </Router>
   );

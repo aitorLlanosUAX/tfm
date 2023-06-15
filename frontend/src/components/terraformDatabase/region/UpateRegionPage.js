@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Form, Button, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import Loader from "../../util/Loader";
@@ -13,7 +13,7 @@ const UpdateRegionPage = () => {
   const [region, setRegion] = useState({});
   const [provider, setProvider] = useState({});
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const UpdateRegion = async () => {
@@ -39,8 +39,8 @@ const UpdateRegionPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await UpdateRegion();
-    history.push("/dashboard");
-    history.push("/region/list");
+    navigate("/dashboard");
+    navigate("/region/list");
   };
 
   useEffect(() => {
@@ -109,7 +109,7 @@ const UpdateRegionPage = () => {
             <Button
               className="mx-2"
               variant="primary"
-              onClick={() => history.push("/region/list")}
+              onClick={() => navigate("/region/list")}
               type="back"
               name="back"
             >

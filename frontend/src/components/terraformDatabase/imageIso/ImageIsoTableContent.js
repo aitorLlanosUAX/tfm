@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ImageIsoTableContent = (props) => {
   const images = props.images;
   const [isLoaded, setIsLoaded] = useState(false);
   const [isRegionLoaded, setIsRegionLoaded] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const deleteImage = (imageId) => {
     let urlSearch = new URL("http://localhost:8080/image/delete");
@@ -23,8 +23,8 @@ const ImageIsoTableContent = (props) => {
     })
       .then((res) => res.json())
       .then((result) => {
-        history.push("/dashboard");
-        history.push("/image/list");
+        navigate("/dashboard");
+        navigate("/image/list");
       })
       .catch(console.log("Network Error"));
   };
@@ -91,7 +91,7 @@ const ImageIsoTableContent = (props) => {
             variant="primary"
             type="submit"
             id={"updateImage " + image.name}
-            onClick={() => history.push("/image/update/" + image.id)}
+            onClick={() => navigate("/image/update/" + image.id)}
           >
             <FontAwesomeIcon icon={faEdit} />
           </Button>

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Form, Button, Alert, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
 const InsertRegionPage = () => {
   const [regionName, setRegionName] = useState();
   const [zone, setZone] = useState();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [providers, setProviders] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -38,8 +38,8 @@ const InsertRegionPage = () => {
       document.getElementById("errorAdd").hidden = false;
       return;
     }
-    history.push("/dashboard");
-    history.push("/region/list");
+    navigate("/dashboard");
+    navigate("/region/list");
   };
 
   useEffect(() => {
@@ -104,7 +104,7 @@ const InsertRegionPage = () => {
             <Button
               className="mx-2"
               variant="primary"
-              onClick={() => history.push("/region/list")}
+              onClick={() => navigate("/region/list")}
               type="back"
               name="back"
             >

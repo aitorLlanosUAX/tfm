@@ -1,12 +1,12 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Form, Button, Col, Alert } from "react-bootstrap";
 import ProviderContext from "./ProviderContext";
 import { useTranslation } from "react-i18next";
 
 const SummaryPage = () => {
   const { stateProvider } = React.useContext(ProviderContext);
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const costFinal =
     parseFloat(stateProvider.instanceNumber) *
@@ -76,7 +76,7 @@ const SummaryPage = () => {
     sessionStorage.removeItem("image");
     sessionStorage.removeItem("instance");
 
-    history.push("/dashboard");
+    navigate("/dashboard");
   };
   return (
     <Container>
@@ -241,7 +241,7 @@ const SummaryPage = () => {
             <Button
               variant="primary"
               type="submit"
-              onClick={() => history.push("/")}
+              onClick={() => navigate("/")}
             >
               {t("Cancel")}
             </Button>

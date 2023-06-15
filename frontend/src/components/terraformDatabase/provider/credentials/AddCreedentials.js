@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Form, Button, Alert, Col } from "react-bootstrap";
 import Loader from "../../../util/Loader";
 import { useParams } from "react-router-dom";
@@ -9,7 +9,7 @@ const AddCreedentials = () => {
   const { id } = useParams();
   const [isLoaded, setIsLoaded] = useState(false);
   const [creedentials, setCreedentials] = useState({});
-  const history = useHistory();
+  const navigate = useNavigate();
   const creedentialsHashMap = new Map();
   const { t } = useTranslation();
 
@@ -29,8 +29,8 @@ const AddCreedentials = () => {
       .then((response) => response.text())
       .then((result) => {
         if (result === "Success") {
-          history.push("/dashboard");
-          history.push("/provider/list");
+          navigate("/dashboard");
+          navigate("/provider/list");
           return;
         }
         document.getElementById("errorAdd").textContent = t(result);
@@ -92,7 +92,7 @@ const AddCreedentials = () => {
             <Button
               className="mx-2"
               variant="primary"
-              onClick={() => history.push("/provider/list")}
+              onClick={() => navigate("/provider/list")}
             >
               {t("Back")}
             </Button>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Form, Button, Col } from "react-bootstrap";
 import Loader from "../../util/Loader";
 import { useTranslation } from "react-i18next";
@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 const InsertProviderPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [providers, setProviders] = useState([]);
-  const history = useHistory();
+  const navigate = useNavigate();
   const [providerSelected, setProviderSelected] = useState();
   const { t } = useTranslation();
 
@@ -17,7 +17,7 @@ const InsertProviderPage = () => {
       providerSelected === undefined
         ? document.getElementById("providerSelect").value
         : providerSelected;
-    history.push("/provider/creedentials/" + id);
+    navigate("/provider/creedentials/" + id);
   };
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const InsertProviderPage = () => {
             <Button
               className="mx-2"
               variant="primary"
-              onClick={() => history.push("/provider/list")}
+              onClick={() => navigate("/provider/list")}
               id="selectBackProvider"
               name="selectBackProvider"
             >

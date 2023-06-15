@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Form, Button, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -10,7 +10,7 @@ const UpdateImagePage = () => {
 
   const { imageId } = useParams();
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [image, setImage] = useState({});
   const [provider, setProvider] = useState({});
@@ -37,7 +37,7 @@ const UpdateImagePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await UpdateImage();
-    history.push("/image/list");
+    navigate("/image/list");
   };
 
   useEffect(() => {
@@ -127,7 +127,7 @@ const UpdateImagePage = () => {
             <Button
               className="mx-2"
               variant="primary"
-              onClick={() => history.push("/image/list")}
+              onClick={() => navigate("/image/list")}
               name="back"
             >
               {t("Back")}

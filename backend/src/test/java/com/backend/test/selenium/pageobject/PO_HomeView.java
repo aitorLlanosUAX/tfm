@@ -1,8 +1,8 @@
-package com.batchCloud.back.test.selenium.pageobject;
+package com.backend.test.selenium.pageobject;
 
 import org.openqa.selenium.WebDriver;
 
-import com.batchCloud.back.test.util.SeleniumUtils;
+import com.backend.test.util.SeleniumUtils;
 
 public class PO_HomeView extends PO_NavView {
 	static public void checkWelcome(WebDriver driver,String text) {

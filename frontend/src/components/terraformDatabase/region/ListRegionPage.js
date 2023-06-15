@@ -5,13 +5,13 @@ import Loader from "../../util/Loader";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ListRegionPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [regions, setRegion] = useState([]);
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   useEffect(() => {
     fetch("http://localhost:8080/region/list", {
       method: "GET",
@@ -36,7 +36,7 @@ const ListRegionPage = () => {
             variant="primary"
             type="submit"
             id="insertRegion"
-            onClick={() => history.push("/region/insert")}
+            onClick={() => navigate("/region/insert")}
           >
             <FontAwesomeIcon className="px-1" icon={faPlus} />
             {t("AddRegion")}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Form, Button, Alert, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
@@ -7,7 +7,7 @@ const InsertImagePage = () => {
   const [imageName, setImageName] = useState();
   const [operatingSystem, setOperatingSystem] = useState();
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [providers, setProviders] = useState([]);
   const [regions, setRegions] = useState([]);
@@ -20,13 +20,14 @@ const InsertImagePage = () => {
 
   const CreateImage = async () => {
     let url = new URL("http://localhost:8080/image/insert");
+    console.log(regionSelected)
     let params = {
       name: imageName,
       operatingSystem: operatingSystem,
       region_id:
         regionSelected === undefined
           ? document.getElementById("regionSelected").value
-          : providerSelected,
+          : regionSelected,
       provider_id:
         providerSelected === undefined
           ? document.getElementById("providerSelect").value
@@ -48,7 +49,7 @@ const InsertImagePage = () => {
       document.getElementById("errorAdd").hidden = false;
       return;
     }
-    history.push("/image/list");
+    navigate("/image/list");
   };
 
   useEffect(() => {
@@ -149,7 +150,7 @@ const InsertImagePage = () => {
             <Button
               className="mx-2"
               variant="primary"
-              onClick={() => history.push("/image/list")}
+              onClick={() => navigate("/image/list")}
               name="back"
             >
               {t("Back")}

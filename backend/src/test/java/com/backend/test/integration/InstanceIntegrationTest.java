@@ -1,4 +1,4 @@
-package com.batchCloud.back.test.integration;
+package com.backend.test.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -24,60 +24,63 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.backend.controllers.RegionController;
-import com.backend.entities.terraform.terraformDatabase.Region;
-import com.backend.service.RegionService;
+import com.backend.controllers.InstanceController;
+import com.backend.entities.terraform.terraformDatabase.Instance;
+import com.backend.service.InstanceService;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(value = RegionController.class)
-public class RegionIntegrationTest {
-
+@WebMvcTest(value = InstanceController.class)
+public class InstanceIntegrationTest {
+	
 	@Autowired
 	private MockMvc mockMvc;
-
 	@MockBean
-	private RegionService regionService;
-
-	private Region wellRegion = new Region();
-
-	String jsonRegion = "{\"id\":null,\"name\":\"eu-west-3\",\"zone\":\"Paris\",\"provider_id\":1}";
-	String jsonRegionList = "[{\"id\":null,\"name\":\"eu-west-3\",\"zone\":\"Paris\",\"provider_id\":1}]";
+	private InstanceService instanceService;
+	
+	
+	private Instance instance = new Instance();
+	
+	String jsonString = "{\"id\":null,\"name\":\"t2.micro\",\"vCpu\":1,\"storage\":null,\"memory\":1,\"cost\":1.0,\"imagen_id\":1}";
+	String jsonStringList = "[{\"id\":null,\"name\":\"t2.micro\",\"vCpu\":1,\"storage\":null,\"memory\":1,\"cost\":1.0,\"imagen_id\":1}]";
+	
 
 	@BeforeEach
-	public void setUp() {
-		wellRegion.setName("eu-west-3");
-		wellRegion.setZone("Paris");
-		wellRegion.setProvider_id(1);
+	public void setup() {
+		instance.setName("t2.micro");
+		instance.setvCpu(1);
+		instance.setMemory(1);
+		instance.setCost(1);
+		instance.setImagen_id(1);
 	}
-
+	
+	
 	@Test
-	public void normaAddRegion() throws Exception {
-		String url = "/region/insert";
-		String jsonString = "{\"zone\":\"Paris\",\"name\":\"eu-west-3\",\"provider_id\":\"1\"}";
+	public void normalAddinstance() throws Exception {
+		String url = "/instance/insert";
+		String jsonString = "{\"name\":\"t2.micro\",\"vCpu\":\"1\",\"memory\":1,\"cost\":1,\"image_id\":1}";
 
 		MvcResult result = mockMvc.perform(post(url).contentType(MediaType.APPLICATION_JSON).content(jsonString))
 				.andExpect(status().isOk()).andReturn();
 
 		assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
-
 	}
 	
 	@Test
-	public void addRegionWithoutParams() throws Exception {
-		String url = "/region/insert";
+	public void addinstanceWithoutParams() throws Exception {
+		String url = "/instance/insert";
 		String jsonString = "{}";
 
-		MvcResult result = mockMvc.perform(post(url).contentType(MediaType.APPLICATION_JSON).content(jsonString)).andReturn();
+		MvcResult result = mockMvc.perform(post(url).contentType(MediaType.APPLICATION_JSON).content(jsonString))
+				.andExpect(status().isOk()).andReturn();
 
-		assertEquals(String.valueOf(Response.SC_BAD_REQUEST), result.getResponse().getContentAsString());
-
+		assertEquals(String.valueOf(Response.SC_NOT_ACCEPTABLE), result.getResponse().getContentAsString());
 	}
 	
 	@Test
 	public void normalDelete() throws Exception {
-		String url = "/region/delete?id=1";
+		String url = "/instance/delete?id=1";
 
-		Mockito.when(regionService.findById(1)).thenReturn(wellRegion);
+		Mockito.when(instanceService.findById(1)).thenReturn(instance);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(url).accept(MediaType.APPLICATION_JSON);
 
@@ -90,10 +93,9 @@ public class RegionIntegrationTest {
 	}
 	
 	@Test
-	public void deleteRegionWithoutParams() throws Exception {
-		String url = "/region/delete";
+	public void deleteinstanceWithoutParams() throws Exception {
+		String url = "/instance/delete";
 
-		Mockito.when(regionService.findById(1)).thenReturn(wellRegion);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(url).accept(MediaType.APPLICATION_JSON);
 
@@ -106,10 +108,10 @@ public class RegionIntegrationTest {
 	}
 	
 	@Test
-	public void deleteRegionWithoutExistentRegion() throws Exception {
-		String url = "/region/delete?id=2";
+	public void deleteinstanceWithoutExistentinstance() throws Exception {
+		String url = "/instance/delete?id=2";
 
-		Mockito.when(regionService.findById(1)).thenReturn(wellRegion);
+		Mockito.when(instanceService.findById(1)).thenReturn(instance);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(url).accept(MediaType.APPLICATION_JSON);
 
@@ -119,14 +121,15 @@ public class RegionIntegrationTest {
 		assertEquals(String.valueOf(Response.SC_NOT_FOUND), result.getResponse().getContentAsString());
 	}
 	
+
 	
 	@Test
 	public void normalList() throws Exception {
-		String url = "/region/list";
-		List<Region> regions = new ArrayList<Region>();
-		regions.add(wellRegion);
+		String url = "/instance/list";
+		List<Instance> instances = new ArrayList<Instance>();
+		instances.add(instance);
 
-		Mockito.when(regionService.findAll()).thenReturn(regions);
+		Mockito.when(instanceService.findAll()).thenReturn(instances);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(url).accept(MediaType.APPLICATION_JSON);
 
@@ -135,16 +138,16 @@ public class RegionIntegrationTest {
 		MockHttpServletResponse response = result.getResponse();
 				
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
-		assertEquals(jsonRegionList, response.getContentAsString());
+		assertEquals(jsonStringList, response.getContentAsString());
 
 	}
 
 	
 	@Test
 	public void normalListEmpty() throws Exception {
-		String url = "/region/list";
+		String url = "/instance/list";
 	
-		Mockito.when(regionService.findAll()).thenReturn(new ArrayList<Region>());
+		Mockito.when(instanceService.findAll()).thenReturn(new ArrayList<Instance>());
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(url).accept(MediaType.APPLICATION_JSON);
 
@@ -159,9 +162,9 @@ public class RegionIntegrationTest {
 	
 	@Test
 	public void normalFindById() throws Exception {
-		String url = "/region/findById?id=1";
+		String url = "/instance/findById?id=1";
 	
-		Mockito.when(regionService.findById(1)).thenReturn(wellRegion);
+		Mockito.when(instanceService.findById(1)).thenReturn(instance);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(url).accept(MediaType.APPLICATION_JSON);
 
@@ -169,15 +172,15 @@ public class RegionIntegrationTest {
 		MockHttpServletResponse response = result.getResponse();
 
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
-		assertEquals(jsonRegion, response.getContentAsString());
+		assertEquals(jsonString, response.getContentAsString());
 
 	}
 	
 	@Test
 	public void findByIdWithNoId() throws Exception {
-		String url = "/region/findById?id=2";
+		String url = "/instance/findById?id=2";
 	
-		Mockito.when(regionService.findById(1)).thenReturn(wellRegion);
+		Mockito.when(instanceService.findById(1)).thenReturn(instance);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(url).accept(MediaType.APPLICATION_JSON);
 
@@ -189,14 +192,14 @@ public class RegionIntegrationTest {
 
 	}
 	
-	
 	@Test
-	public void normalFindByProviderId() throws Exception {
-		String url = "/region/fromProvider?provider_id=1";
-		List<Region> regions = new ArrayList<Region>();
-		regions.add(wellRegion);
+	public void normalFindByImageId() throws Exception {
+		String url = "/instance/fromImage?image_id=1";
+		List<Instance> instances = new ArrayList<Instance>();
+		instances.add(instance);
 
-		Mockito.when(regionService.findByProviderId(1)).thenReturn(regions);
+		Mockito.when(instanceService.findByImageId(1)).thenReturn(instances);
+
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(url).accept(MediaType.APPLICATION_JSON);
 
@@ -204,17 +207,17 @@ public class RegionIntegrationTest {
 		MockHttpServletResponse response = result.getResponse();
 
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
-		assertEquals(jsonRegionList, response.getContentAsString());
+		assertEquals(jsonStringList, response.getContentAsString());
 
 	}
 	
 	@Test
-	public void findByProviderIdNoExistent() throws Exception {
-		String url = "/region/fromProvider?provider_id=2";
-		List<Region> regions = new ArrayList<Region>();
-		regions.add(wellRegion);
+	public void findByIdWithNoImageId() throws Exception {
+		String url = "/instance/fromImage?image_id=2";
+		List<Instance> instances = new ArrayList<Instance>();
+		instances.add(instance);
 
-		Mockito.when(regionService.findByProviderId(1)).thenReturn(regions);
+		Mockito.when(instanceService.findByImageId(1)).thenReturn(instances);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(url).accept(MediaType.APPLICATION_JSON);
 
@@ -225,4 +228,8 @@ public class RegionIntegrationTest {
 		assertEquals("[]", response.getContentAsString());
 
 	}
+	
+	
+	
+
 }

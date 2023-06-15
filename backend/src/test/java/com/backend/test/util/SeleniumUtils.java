@@ -1,4 +1,4 @@
-package com.batchCloud.back.test.util;
+package com.backend.test.util;
 
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

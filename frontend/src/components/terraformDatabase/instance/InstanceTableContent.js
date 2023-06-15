@@ -2,11 +2,11 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const InstanceTableContent = (props) => {
   const instances = props.instances;
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const deleteImage = (instanceId) => {
     let urlSearch = new URL("http://localhost:8080/instance/delete");
@@ -21,8 +21,8 @@ const InstanceTableContent = (props) => {
     })
       .then((res) => res.json())
       .then((result) => {
-        history.push("/dashboard");
-        history.push("/instance/list");
+        navigate("/dashboard");
+        navigate("/instance/list");
       })
       .catch(console.log("Network Error"));
   };
@@ -39,7 +39,7 @@ const InstanceTableContent = (props) => {
           variant="primary"
           type="submit"
           id={"updateInstance " + instance.name}
-          onClick={() => history.push("/instance/update/" + instance.id)}
+          onClick={() => navigate("/instance/update/" + instance.id)}
         >
           <FontAwesomeIcon icon={faEdit} />
         </Button>

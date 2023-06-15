@@ -2,11 +2,11 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ProviderTableContent = (props) => {
   const providers = props.providers;
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const deleteProvider = (providerId) => {
     let urlSearch = new URL("http://localhost:8080/provider/delete");
@@ -21,18 +21,18 @@ const ProviderTableContent = (props) => {
     })
       .then((res) => res.json())
       .then((result) => {
-        history.push("/dashboard");
-        history.push("/provider/list");
+        navigate("/dashboard");
+        navigate("/provider/list");
       })
       .catch(console.log("Network Error"));
   };
 
   const checkProvider = (name) => {
-    history.push("/provider/checkcreedentials/" + name);
+    navigate("/provider/checkcreedentials/" + name);
   };
 
   const updateProvider = (name) => {
-    history.push("/provider/update/" + name);
+    navigate("/provider/update/" + name);
   };
   return providers.map((provider) => (
     <tr className="align-items-center" key={provider.id}>

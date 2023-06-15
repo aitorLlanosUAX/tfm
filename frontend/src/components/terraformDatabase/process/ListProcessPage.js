@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Table, Row, Col, Button } from "react-bootstrap";
 import Process from "../subcomponents/Process";
 import Loader from "../../util/Loader";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -11,7 +11,7 @@ import Session from "../../login/Session";
 const ListProcessPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [processes, setProcesses] = useState([]);
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const { state } = React.useContext(Session);
 
@@ -83,7 +83,7 @@ const ListProcessPage = () => {
             variant="primary"
             type="submit"
             id="newProcess"
-            onClick={() => history.push("/newProcess")}
+            onClick={() => navigate("/newProcess")}
           >
             <FontAwesomeIcon className="px-1" icon={faPlus} />
             {t("AddProcess")}
